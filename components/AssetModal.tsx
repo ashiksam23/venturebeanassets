@@ -4,6 +4,7 @@ import { AssetItem } from '../types';
 interface AssetModalProps {
   asset: AssetItem | null;
   onClose: () => void;
+  isClosing: boolean;
 }
 
 const CheckIcon = () => (
@@ -17,7 +18,6 @@ const LinkIcon = () => (
         <path strokeLinecap="round" strokeLinejoin="round" d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244" />
     </svg>
 );
-
 
 const renderDetailsList = (items: (string | { text: string; link: string })[]) => (
   <ul className="space-y-3 text-gray-700">
@@ -44,7 +44,7 @@ const renderDetailsList = (items: (string | { text: string; link: string })[]) =
   </ul>
 );
 
-const AssetModal: React.FC<AssetModalProps> = ({ asset, onClose }) => {
+const AssetModal: React.FC<AssetModalProps> = ({ asset, onClose, isClosing }) => {
   const modalRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
 
@@ -87,7 +87,7 @@ const AssetModal: React.FC<AssetModalProps> = ({ asset, onClose }) => {
 
   return (
     <div
-      className="fixed inset-0 bg-black bg-opacity-60 z-50 flex items-center justify-center p-4 transition-opacity duration-300 animate-fadeIn"
+      className={`fixed inset-0 bg-black bg-opacity-60 z-50 flex items-center justify-center p-4 transition-opacity duration-300 ${isClosing ? 'animate-fadeOut' : 'animate-fadeIn'}`}
       onClick={onClose}
       aria-modal="true"
       role="dialog"
@@ -95,11 +95,11 @@ const AssetModal: React.FC<AssetModalProps> = ({ asset, onClose }) => {
     >
       <div
         ref={modalRef}
-        className="bg-gray-50 rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] flex flex-col transform transition-transform duration-300 animate-scaleIn"
+        className={`bg-gray-50 rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] flex flex-col transform transition-transform duration-300 ${isClosing ? 'animate-scaleOut' : 'animate-scaleIn'}`}
         onClick={(e) => e.stopPropagation()}
         role="document"
       >
-        <header className="p-6 flex justify-between items-center border-b border-gray-200 bg-white">
+        <header className="p-6 flex justify-between items-center border-b border-gray-200 bg-white rounded-t-2xl">
           <h2 id="asset-modal-title" className="text-3xl font-bold text-vb-blue">{asset.title}</h2>
           <button 
             ref={closeButtonRef}
@@ -143,9 +143,13 @@ const AssetModal: React.FC<AssetModalProps> = ({ asset, onClose }) => {
       </div>
       <style>{`
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
         @keyframes scaleIn { from { transform: scale(0.95); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        @keyframes scaleOut { from { transform: scale(1); opacity: 1; } to { transform: scale(0.95); opacity: 0; } }
         .animate-fadeIn { animation: fadeIn 0.3s ease-out forwards; }
+        .animate-fadeOut { animation: fadeOut 0.3s ease-out forwards; }
         .animate-scaleIn { animation: scaleIn 0.3s ease-out forwards; }
+        .animate-scaleOut { animation: scaleOut 0.3s ease-out forwards; }
       `}</style>
     </div>
   );

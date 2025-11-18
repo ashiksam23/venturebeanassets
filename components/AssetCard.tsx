@@ -39,9 +39,10 @@ const AssetCard: React.FC<AssetCardProps> = ({ asset, onClick }) => {
   return (
     <button
       onClick={onClick}
-      className="group bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 text-left w-full h-full flex flex-col"
+      className="group relative bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:border-gray-300 transition-all duration-300 text-left w-full h-full flex flex-col active:scale-[0.98] active:brightness-95"
       aria-label={`View details for ${asset.title}`}
     >
+      <div className="absolute -inset-px rounded-xl border-2 border-transparent group-hover:border-vb-maroon transition-all duration-300 pointer-events-none" aria-hidden="true"></div>
       <div className="flex-shrink-0 w-14 h-14 rounded-lg bg-vb-blue/10 text-vb-maroon flex items-center justify-center mb-5 transition-colors duration-300 group-hover:bg-vb-maroon group-hover:text-white">
         {Icons[asset.icon]}
       </div>
