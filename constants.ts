@@ -42,8 +42,14 @@ export const assetsData: AssetItem[] = [
     id: 4,
     title: 'Assessments',
     icon: 'assessments',
-    description: 'Regularly scheduled analysis and evaluation tools.',
-    details: ['Twice A Month'],
+    description: 'Self-assessment tools to foster growth and self-awareness.',
+    details: [
+      'How coachable am I?',
+      'What is my leadership style?',
+      'How well do I manage my time and priorities?',
+      'What are my core motivators and drivers?',
+      'Am I leading or managing?',
+    ],
   },
   {
     id: 5,
